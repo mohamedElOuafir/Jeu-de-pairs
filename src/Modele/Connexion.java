@@ -15,12 +15,12 @@ import java.util.Properties;
  */
 public class Connexion {
     
-    private Connection connection = null;
-    private String url;
-    private String user;
-    private String password;
+    private static Connection connection = null;
+    private static String url;
+    private static String user;
+    private static String password;
     
-    public Connexion(){
+    static {
         
         //Using a properties file to hide the informations about our DATABASE.
         
@@ -30,18 +30,17 @@ public class Connexion {
         */
         
         
-        try (InputStream input = getClass().getClassLoader().getResourceAsStream("ressources/DB.properties")){
+        try (InputStream input = Connexion.class.getClassLoader().getResourceAsStream("ressources/DB.properties")){
             Properties props = new Properties();
             
             if (input == null){
                 System.out.println("File propreties doesn't exist !");
-                return ;
             }
             
             props.load(input);
-            this.url = props.getProperty("DB.url");
-            this.user = props.getProperty("DB.user");
-            this.password = props.getProperty("DB.password");
+            url = props.getProperty("DB.url");
+            user = props.getProperty("DB.user");
+            password = props.getProperty("DB.password");
             
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(url, user, password);
@@ -60,7 +59,19 @@ public class Connexion {
         }
     }
     
-    public Connection getConnection(){
+    public static Connection getConnection() {
         return connection;
+    }
+    
+    public static void closeConnection() throws SQLException{
+        
+        if (connection != null)
+            try{
+                connection.close();
+                System.out.println("Connexion Closed successfully !");
+            }catch (SQLException e){
+                System.out.println("Error closing Connexion : "+ e.getMessage());
+            }
+            
     }
 }
