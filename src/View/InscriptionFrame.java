@@ -16,8 +16,11 @@ public class InscriptionFrame extends javax.swing.JFrame {
      * Creates new form InscriptionFrame
      */
     public InscriptionFrame() {
+        
+        //Initialisation de l'image d'arrière plan :
         BackgroundImage bcImg = new BackgroundImage();
         setContentPane(bcImg);
+        
         initComponents();
         setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
     }
@@ -174,10 +177,14 @@ public class InscriptionFrame extends javax.swing.JFrame {
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         try {
+            
+            //récupération des inputs : 
             String userName = usernameField.getText();
             String email = usernameField.getText();
             char[] passwordChars = passwordField.getPassword();
             String password = new String(passwordChars);
+            
+            //vérification des inputs pour qu'ils soient pas vide
             if (userName.equals("") || email.equals("") || password.equals(""))
                 errorMessage.setText("Please fill in the following fields correctly !");
             

@@ -17,12 +17,14 @@ public class ServiceController {
     
     private static Player currentPlayer ;
     
+    //ajouter un joueur au base de données :
     public static void addPlayer(String userName, String email, String password) throws SQLException{
         Player newPlayer = new Player(userName, email, password);
         ServiceModel.inserPlayer(newPlayer);
         setCurrentPlayer(newPlayer);
     }
     
+    //récuper un joueur selon son email et mot de passe :
     public static void getPlayer(String email, String password) throws SQLException, PlayerNotFoundException{
         Player player = ServiceModel.playerAuthentification(email, password);
         if (player == null){
@@ -31,6 +33,7 @@ public class ServiceController {
         setCurrentPlayer(player);
     }
     
+    //récuperrer les trois premier high scores : 
     public static ArrayList<Player> getAllRecords() throws SQLException{
         ArrayList<Player> records = ServiceModel.getAllRecords();
         
@@ -40,6 +43,7 @@ public class ServiceController {
         
     }
     
+    //modifier le high score d'un joueur : 
     public static void updatePlayerScore(int score) throws SQLException{
         currentPlayer.setHighScore(score);
         ServiceModel.updateScore(currentPlayer);

@@ -18,8 +18,11 @@ public class LoginFrame extends javax.swing.JFrame {
      * Creates new form LoginFrame
      */
     public LoginFrame() {
+        
+        //Initialisation de l'image d'arrière plan :
         BackgroundImage bgImg = new BackgroundImage();
         setContentPane(bgImg);
+        
         initComponents();
         setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
     }
@@ -180,6 +183,8 @@ public class LoginFrame extends javax.swing.JFrame {
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         try {
+            
+            //récupération des inputs : 
             String email = emailField.getText();
             char[] passwordChars = passwordField.getPassword();
             String password = new String(passwordChars);

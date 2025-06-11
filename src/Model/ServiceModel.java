@@ -21,6 +21,7 @@ public class ServiceModel {
         connection = Connexion.getConnection();
     }
     
+    //ajouter un joueur dans la base de donnée :
     public static void inserPlayer(Player player) throws SQLException{
         
         String query = "INSERT INTO player (email, username, motDePasse, highScore) VALUES (?,?,?,?)";
@@ -35,6 +36,7 @@ public class ServiceModel {
     }
     
     
+    //faire une authentification d'un joueur selon som email set son mot de passe : 
     public static Player playerAuthentification(String email, String password) throws SQLException{
         
         String query = "SELECT * FROM player WHERE player.email = ? AND player.motDePasse = ?";
@@ -58,7 +60,7 @@ public class ServiceModel {
         return null;
     }
     
-    
+    //mettre à jour le score d'un joueur :
     public static void updateScore(Player player) throws SQLException{
         
         String query = "UPDATE player SET highScore = ? WHERE email = ?";
@@ -71,7 +73,7 @@ public class ServiceModel {
         
     }
     
-    
+    //récupérations des trois premier records des joueurs :
     public static ArrayList<Player> getAllRecords() throws SQLException{
         ArrayList<Player> records = new ArrayList<>();
         

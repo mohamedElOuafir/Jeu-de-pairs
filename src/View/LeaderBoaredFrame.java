@@ -20,10 +20,15 @@ public class LeaderBoaredFrame extends javax.swing.JFrame {
      * Creates new form LeaderBoaredFrame
      */
     public LeaderBoaredFrame() {
+        
+        //Initialisation de l'image d'arrière plan :
         BackgroundImage bcImg = new BackgroundImage();
-        setContentPane(bcImg);      
+        setContentPane(bcImg);
+        
         initComponents();
         setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+        
+        //récupération des records des joueurs :
         try{
             ArrayList<Player> records = ServiceController.getAllRecords();
            
@@ -240,6 +245,8 @@ public class LeaderBoaredFrame extends javax.swing.JFrame {
     
     
     public String scoreFormatter (int index, ArrayList<Player> list){
+        
+        //Fomatter les scores du seconds en temps :
         Formatter formatter1 = new Formatter();
         Formatter formatter2 = new Formatter();
         int minutes = list.get(index).getHighScore() / 60;

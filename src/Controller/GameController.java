@@ -29,6 +29,7 @@ public class GameController {
         shuffleGrid();
     }
     
+    //le remplissage du tableau des cartes : 
     public void fillGrid(){
         
         cards.add(new Card("/ressources/Cards/Dragon.png"));
@@ -56,10 +57,12 @@ public class GameController {
         cards.add(new Card("/ressources/Cards/worrior2.png"));
     }
     
+    //randomiser la table des cartes : 
     public void shuffleGrid(){
         Collections.shuffle(this.cards);
     }
     
+    //vérifier la correspondance des paires : 
     public boolean checkCouples(int firstIndex, int secondIndex){
         
         if(cards.get(firstIndex).equals(cards.get(secondIndex))){
@@ -70,6 +73,7 @@ public class GameController {
         return false;
     }
     
+    //vérifcation de la fin du jeu : 
     public int checkEndGame(){
         if (essais == 0){
             return -1;
@@ -79,6 +83,8 @@ public class GameController {
         return 0;
     }
     
+    
+    //Vérifier si le score actuel dépasse celui en base du joueur :
     public void checkScoreUpdate() throws SQLException{
         int newScore = gameFrame.getMinutes() * 60 + gameFrame.getSeconds();
         

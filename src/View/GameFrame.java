@@ -10,14 +10,9 @@ import java.awt.Image;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Formatter;
-import java.util.HashSet;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JColorChooser;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.Timer;
 
 /**
@@ -30,17 +25,21 @@ public class GameFrame extends javax.swing.JFrame {
      * Creates new form GameFrame
      */
     public GameFrame() {
-        this.gameController = new GameController(this);
-        this.buttons = new ArrayList<JButton>();
         
+        this.gameController = new GameController(this);
+        this.buttons = new ArrayList<>();
+        
+        
+        //Initialisation de l'image d'arrière plan :
         MainGameBackgroundImage bcImg = new MainGameBackgroundImage();
         setContentPane(bcImg);
         
         initComponents();
         setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
         
-        playerName.setText("Player : " + ServiceController.getCurrentPlayer().getUserName());
         
+        //recupération du joueur et son high score : 
+        playerName.setText("Player : " + ServiceController.getCurrentPlayer().getUserName());
         if (ServiceController.getCurrentPlayer().getHighScore() != 0){
             int scoreSeconds = ServiceController.getCurrentPlayer().getHighScore();
             
@@ -50,6 +49,9 @@ public class GameFrame extends javax.swing.JFrame {
             String score = String.format("%02d : %02d", minutes, seconds);
             highScore.setText(score);
         }
+        
+        
+        //listant tous les buttons dans la liste buttons : 
         buttons.add(jButton1);
         buttons.add(jButton2);
         buttons.add(jButton3);
@@ -68,6 +70,7 @@ public class GameFrame extends javax.swing.JFrame {
         buttons.add(jButton16);
        
         
+        //l'implementaion du chrono :
         timer = new Timer (1000, e -> {
             Formatter formatter1 = new Formatter();
             Formatter formatter2 = new Formatter();
@@ -398,6 +401,7 @@ public class GameFrame extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         
+        //la premier visualisation des images de chaque carte :
         for (JButton b:buttons){
             ImageIcon imageCard = getResizedImageIcon(gameController
                     .getCards()
@@ -407,6 +411,7 @@ public class GameFrame extends javax.swing.JFrame {
             b.setIcon(imageCard);
         }
         
+        //cachant les images après 4 seconds :
         Timer showCardImages = new Timer(4000, e -> {  
             ImageIcon backImage = getResizedImageIcon(originalIcon);
             for (JButton b:buttons){
@@ -421,6 +426,7 @@ public class GameFrame extends javax.swing.JFrame {
 
     private void ButtonClickedActionPerformerd(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonClickedActionPerformerd
         
+        //la logique des buttons cliquées :
         if (firstSelected == null){
             firstSelected = (JButton) evt.getSource();
             revealCard(firstSelected);
@@ -430,6 +436,8 @@ public class GameFrame extends javax.swing.JFrame {
             revealCard(secondSelected);
             boolean result = gameController.checkCouples(buttons.indexOf(firstSelected), buttons.indexOf(secondSelected));
             
+            
+            //vérification des paires correspondantes après 1 second:
             Timer checkMatchingTimer = new Timer (1000, e -> {
                 if (result){
                     disableButtons();
@@ -441,6 +449,7 @@ public class GameFrame extends javax.swing.JFrame {
             checkMatchingTimer.setRepeats(false);
             checkMatchingTimer.start();
             
+            //la vérification de la fin du jeu :
             if (gameController.checkEndGame() == 1){
                 try{
                     timer.stop();
@@ -458,6 +467,7 @@ public class GameFrame extends javax.swing.JFrame {
         
     }//GEN-LAST:event_ButtonClickedActionPerformerd
     
+    //visualiser l'image du carte cliquée :
     public void revealCard(JButton clickedButton){
         int index = buttons.indexOf(clickedButton);
         ImageIcon imageCard = getResizedImageIcon(gameController
@@ -468,6 +478,7 @@ public class GameFrame extends javax.swing.JFrame {
         clickedButton.setIcon(imageCard);
     }
     
+    //cachant les deux cartes qui sont pas matchés :
     public void hideCards(){
         ImageIcon backImage = getResizedImageIcon(originalIcon);
         
@@ -478,6 +489,7 @@ public class GameFrame extends javax.swing.JFrame {
         secondSelected = null;
     }
     
+    //désactivation des images matchés :
     public void disableButtons(){
         firstSelected.setDisabledIcon(firstSelected.getIcon());
         secondSelected.setDisabledIcon(secondSelected.getIcon());
@@ -486,6 +498,7 @@ public class GameFrame extends javax.swing.JFrame {
         secondSelected = null;
     }
     
+    //adapter l'image à la taille du bouton
     public ImageIcon getResizedImageIcon(ImageIcon originalImage){
         Image scaledImage = originalImage.getImage().getScaledInstance(
                 jButton1.getWidth(),
@@ -495,6 +508,7 @@ public class GameFrame extends javax.swing.JFrame {
         return new ImageIcon(scaledImage);
     }
     
+    //le message à afficher en cas de victoire
     public void showCongratsMessage(){
        String score = String.format("%02d : %02d", minutes, seconds);
        int option = JOptionPane.showOptionDialog(
@@ -517,6 +531,7 @@ public class GameFrame extends javax.swing.JFrame {
         
     }
     
+    //le message à afficher en cas de défait
     public void showGameOverMessage(){
         int option = JOptionPane.showOptionDialog(
             this,
