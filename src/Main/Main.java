@@ -4,7 +4,8 @@
  */
 package Main;
 
-import Modele.Connexion;
+import Model.Connexion;
+import View.LoginFrame;
 
 
 
@@ -12,9 +13,9 @@ import Modele.Connexion;
  *
  * @author moham
  */
-public class MainClass {
+public class Main {
    
     public static void main (String[] args){
-        Connexion conn = new Connexion();
+        new LoginFrame().setVisible(true);
     }
 }
