@@ -20,9 +20,11 @@ public class GameController {
     private ArrayList<Card> cards;
     private int correctCardsNumber;
     private GameFrame gameFrame;
+    private ServiceController serviceController;
     
-    public GameController(GameFrame gameFrame){
+    public GameController(GameFrame gameFrame, ServiceController serviceController){
         this.gameFrame = gameFrame;
+        this.serviceController = serviceController;
         this.essais = 3;
         this.cards = new ArrayList<>();
         fillGrid();
@@ -88,11 +90,11 @@ public class GameController {
     public void checkScoreUpdate() throws SQLException{
         int newScore = gameFrame.getMinutes() * 60 + gameFrame.getSeconds();
         
-        if (ServiceController.getCurrentPlayer().getHighScore() == 0)
-            ServiceController.updatePlayerScore(newScore);
+        if (serviceController.getCurrentPlayer().getHighScore() == 0)
+            serviceController.updatePlayerScore(newScore);
         
-        else if (newScore < ServiceController.getCurrentPlayer().getHighScore())
-            ServiceController.updatePlayerScore(newScore);
+        else if (newScore < serviceController.getCurrentPlayer().getHighScore())
+            serviceController.updatePlayerScore(newScore);
     }
     
     public ArrayList<Card> getCards(){
@@ -101,5 +103,9 @@ public class GameController {
     
     public int getEssais(){
         return this.essais;
+    }
+    
+    public ServiceController getServiceController(){
+        return this.serviceController;
     }
 }

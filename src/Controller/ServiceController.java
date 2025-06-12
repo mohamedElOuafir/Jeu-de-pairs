@@ -15,18 +15,24 @@ import java.util.ArrayList;
  */
 public class ServiceController {
     
-    private static Player currentPlayer ;
+    private Player currentPlayer ;
+    private ServiceModel model;
+    
+    //le constructeur de la classe ServiceController : 
+    public ServiceController(ServiceModel model) {
+        this.model = model;
+    }
     
     //ajouter un joueur au base de données :
-    public static void addPlayer(String userName, String email, String password) throws SQLException{
+    public void addPlayer(String userName, String email, String password) throws SQLException{
         Player newPlayer = new Player(userName, email, password);
-        ServiceModel.inserPlayer(newPlayer);
+        model.inserPlayer(newPlayer);
         setCurrentPlayer(newPlayer);
     }
     
     //récuper un joueur selon son email et mot de passe :
-    public static void getPlayer(String email, String password) throws SQLException, PlayerNotFoundException{
-        Player player = ServiceModel.playerAuthentification(email, password);
+    public void getPlayer(String email, String password) throws SQLException, PlayerNotFoundException{
+        Player player = model.playerAuthentification(email, password);
         if (player == null){
             throw new PlayerNotFoundException();
         }
@@ -34,8 +40,8 @@ public class ServiceController {
     }
     
     //récuperrer les trois premier high scores : 
-    public static ArrayList<Player> getAllRecords() throws SQLException{
-        ArrayList<Player> records = ServiceModel.getAllRecords();
+    public ArrayList<Player> getAllRecords() throws SQLException{
+        ArrayList<Player> records = model.getAllRecords();
         
         if(records != null)
             return records;
@@ -44,16 +50,16 @@ public class ServiceController {
     }
     
     //modifier le high score d'un joueur : 
-    public static void updatePlayerScore(int score) throws SQLException{
+    public void updatePlayerScore(int score) throws SQLException{
         currentPlayer.setHighScore(score);
-        ServiceModel.updateScore(currentPlayer);
+        model.updateScore(currentPlayer);
     }
     
-    public static Player getCurrentPlayer(){
+    public Player getCurrentPlayer(){
         return currentPlayer;
     }
     
-    public static void setCurrentPlayer(Player player){
+    public void setCurrentPlayer(Player player){
         currentPlayer = player;
     }
 }

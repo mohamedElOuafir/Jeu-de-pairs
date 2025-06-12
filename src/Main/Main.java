@@ -4,7 +4,9 @@
  */
 package Main;
 
+import Controller.ServiceController;
 import Model.Connexion;
+import Model.ServiceModel;
 import View.LoginFrame;
 
 
@@ -16,6 +18,10 @@ import View.LoginFrame;
 public class Main {
    
     public static void main (String[] args){
-        new LoginFrame().setVisible(true);
+        ServiceModel model = new ServiceModel();
+        ServiceController controller = new ServiceController(model);
+        
+        LoginFrame login = new LoginFrame(controller);
+        login.setVisible(true);
     }
 }

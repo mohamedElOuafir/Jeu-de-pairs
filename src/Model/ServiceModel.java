@@ -15,14 +15,14 @@ import java.util.ArrayList;
  */
 public class ServiceModel {
     
-    private static Connection connection;
+    private Connection connection;
     
-    static {
+    public ServiceModel() {
         connection = Connexion.getConnection();
     }
     
     //ajouter un joueur dans la base de donnée :
-    public static void inserPlayer(Player player) throws SQLException{
+    public void inserPlayer(Player player) throws SQLException{
         
         String query = "INSERT INTO player (email, username, motDePasse, highScore) VALUES (?,?,?,?)";
         PreparedStatement statement = connection.prepareStatement(query);
@@ -37,7 +37,7 @@ public class ServiceModel {
     
     
     //faire une authentification d'un joueur selon som email set son mot de passe : 
-    public static Player playerAuthentification(String email, String password) throws SQLException{
+    public Player playerAuthentification(String email, String password) throws SQLException{
         
         String query = "SELECT * FROM player WHERE player.email = ? AND player.motDePasse = ?";
         PreparedStatement statement = connection.prepareStatement(query);
@@ -61,7 +61,7 @@ public class ServiceModel {
     }
     
     //mettre à jour le score d'un joueur :
-    public static void updateScore(Player player) throws SQLException{
+    public void updateScore(Player player) throws SQLException{
         
         String query = "UPDATE player SET highScore = ? WHERE email = ?";
         PreparedStatement statement = connection.prepareStatement(query);
@@ -74,7 +74,7 @@ public class ServiceModel {
     }
     
     //récupérations des trois premier records des joueurs :
-    public static ArrayList<Player> getAllRecords() throws SQLException{
+    public ArrayList<Player> getAllRecords() throws SQLException{
         ArrayList<Player> records = new ArrayList<>();
         
         String query = "SELECT * FROM player ORDER BY highscore ASC";

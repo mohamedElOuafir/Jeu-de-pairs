@@ -6,7 +6,6 @@ package View;
 
 import Controller.ServiceController;
 import Exceptions.PlayerNotFoundException;
-import javax.swing.JOptionPane;
 import java.sql.*;
 /**
  *
@@ -16,8 +15,11 @@ public class LoginFrame extends javax.swing.JFrame {
 
     /**
      * Creates new form LoginFrame
+     * @param controller
      */
-    public LoginFrame() {
+    public LoginFrame(ServiceController controller) {
+        this.controller = controller;
+
         
         //Initialisation de l'image d'arrière plan :
         BackgroundImage bgImg = new BackgroundImage();
@@ -189,8 +191,8 @@ public class LoginFrame extends javax.swing.JFrame {
             char[] passwordChars = passwordField.getPassword();
             String password = new String(passwordChars);
             
-            ServiceController.getPlayer(email, password);
-            new GameFrame().setVisible(true);
+            controller.getPlayer(email, password);
+            new GameFrame(controller).setVisible(true);
             this.dispose();
             
         }catch(PlayerNotFoundException e){
@@ -201,7 +203,7 @@ public class LoginFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
-        new InscriptionFrame().setVisible(true);
+        new InscriptionFrame(controller).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jLabel4MouseClicked
 
@@ -210,45 +212,23 @@ public class LoginFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_exitButtonActionPerformed
 
     private void leaderBoaredButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leaderBoaredButtonActionPerformed
-        new LeaderBoaredFrame().setVisible(true);
+        new LeaderBoaredFrame(controller).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_leaderBoaredButtonActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LoginFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LoginFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LoginFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LoginFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
+    /*public static void main(String args[]) {
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new LoginFrame().setVisible(true);
             }
         });
-    }
-   
+    }*/
+    
+    private ServiceController controller;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField emailField;
     private javax.swing.JLabel errorMessage;
