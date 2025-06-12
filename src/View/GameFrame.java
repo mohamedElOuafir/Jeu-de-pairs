@@ -394,8 +394,8 @@ public class GameFrame extends javax.swing.JFrame {
             b.setIcon(imageCard);
         }
         
-        //cachant les images après 4 seconds :
-        Timer showCardImages = new Timer(4000, e -> {  
+        //cachant les images après 6.5 seconds :
+        Timer showCardImages = new Timer(6500, e -> {  
             ImageIcon backImage = getResizedImageIcon(originalIcon);
             for (JButton b:buttons){
                 b.setText("");
@@ -502,7 +502,7 @@ public class GameFrame extends javax.swing.JFrame {
            JOptionPane.YES_NO_OPTION,
            JOptionPane.INFORMATION_MESSAGE,
            null,
-           new String[]{"Restart", "Exit"},
+           new String[]{"Restart", "Back"},
            "Restart"
        );
 
@@ -510,7 +510,8 @@ public class GameFrame extends javax.swing.JFrame {
            dispose();
            new GameFrame(gameController.getServiceController()).setVisible(true);
        } else {
-           System.exit(0);
+           dispose();
+           new LoginFrame(gameController.getServiceController()).setVisible(true);
        }
         
     }
@@ -524,7 +525,7 @@ public class GameFrame extends javax.swing.JFrame {
             JOptionPane.YES_NO_OPTION,
             JOptionPane.QUESTION_MESSAGE,
             null,
-            new String[]{"Restart", "Exit"},
+            new String[]{"Restart", "Back"},
             "Restart"
         );
 
@@ -532,7 +533,8 @@ public class GameFrame extends javax.swing.JFrame {
             dispose();
             new GameFrame(gameController.getServiceController()).setVisible(true);
         } else {
-            System.exit(0);
+            dispose();
+            new LoginFrame(gameController.getServiceController()).setVisible(true);
         }
 
     }

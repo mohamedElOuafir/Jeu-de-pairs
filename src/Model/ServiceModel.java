@@ -36,7 +36,7 @@ public class ServiceModel {
     }
     
     
-    //faire une authentification d'un joueur selon som email set son mot de passe : 
+    //faire une authentification d'un joueur selon som email et son mot de passe : 
     public Player playerAuthentification(String email, String password) throws SQLException{
         
         String query = "SELECT * FROM player WHERE player.email = ? AND player.motDePasse = ?";
@@ -77,7 +77,7 @@ public class ServiceModel {
     public ArrayList<Player> getAllRecords() throws SQLException{
         ArrayList<Player> records = new ArrayList<>();
         
-        String query = "SELECT * FROM player ORDER BY highscore ASC";
+        String query = "SELECT * FROM player ORDER BY highscore ASC LIMIT 3";
         PreparedStatement statement = connection.prepareStatement(query);
         
         ResultSet result = statement.executeQuery();
@@ -94,9 +94,10 @@ public class ServiceModel {
             }
         }
         
+        
         if (records.isEmpty())
             return null;
-        
+     
         return records;
     }
 }

@@ -8,7 +8,7 @@ import Controller.ServiceController;
 import Model.Player;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Formatter;
+
 
 /**
  *
@@ -32,8 +32,8 @@ public class LeaderBoaredFrame extends javax.swing.JFrame {
         
         //récupération des records des joueurs :
         try{
-            ArrayList<Player> records = controller.getAllRecords();
-           
+            ArrayList<Player> records = this.controller.getAllRecords();
+            
             switch (records.size()) {
                 case 1:
                     TOP1Score.setText(scoreFormatter(0, records));
@@ -47,6 +47,7 @@ public class LeaderBoaredFrame extends javax.swing.JFrame {
                     TOP2.setText(records.get(1).getUserName());
                     break;
                 case 3:
+                    
                     TOP1Score.setText(scoreFormatter(0, records));
                     TOP1.setText(records.get(0).getUserName());
                     
@@ -249,11 +250,11 @@ public class LeaderBoaredFrame extends javax.swing.JFrame {
     public String scoreFormatter (int index, ArrayList<Player> list){
         
         //Fomatter les scores du seconds en temps :
-        Formatter formatter1 = new Formatter();
-        Formatter formatter2 = new Formatter();
+        
         int minutes = list.get(index).getHighScore() / 60;
         int seconds = list.get(index).getHighScore() % 60;
-        String text = (formatter1.format("%02d", minutes)+ " : "+ formatter2.format("%02d", seconds));
+        String text = String.format("%02d : %02d", minutes, seconds);
+
         return text;
     }
     /**
