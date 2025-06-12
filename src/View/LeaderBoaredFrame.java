@@ -33,7 +33,7 @@ public class LeaderBoaredFrame extends javax.swing.JFrame {
         //récupération des records des joueurs :
         try{
             ArrayList<Player> records = this.controller.getAllRecords();
-            
+            System.out.println("leaderboared : " + records.size());
             switch (records.size()) {
                 case 1:
                     TOP1Score.setText(scoreFormatter(0, records));

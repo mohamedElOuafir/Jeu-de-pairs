@@ -475,7 +475,9 @@ public class GameFrame extends javax.swing.JFrame {
     //désactivation des images matchés :
     public void disableButtons(){
         firstSelected.setDisabledIcon(firstSelected.getIcon());
+        firstSelected.setEnabled(false);
         secondSelected.setDisabledIcon(secondSelected.getIcon());
+        secondSelected.setEnabled(false);
         
         firstSelected = null;
         secondSelected = null;

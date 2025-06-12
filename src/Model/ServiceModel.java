@@ -77,7 +77,7 @@ public class ServiceModel {
     public ArrayList<Player> getAllRecords() throws SQLException{
         ArrayList<Player> records = new ArrayList<>();
         
-        String query = "SELECT * FROM player ORDER BY highscore ASC LIMIT 3";
+        String query = "SELECT * FROM player ORDER BY highscore ASC";
         PreparedStatement statement = connection.prepareStatement(query);
         
         ResultSet result = statement.executeQuery();
@@ -91,13 +91,17 @@ public class ServiceModel {
                 );
                 player.setHighScore(result.getInt("highscore"));
                 records.add(player);
+                
+                if (records.size() == 3)
+                    break;
             }
         }
         
         
         if (records.isEmpty())
             return null;
-     
+        
+        System.out.println("model : "+ records.size());
         return records;
     }
 }
